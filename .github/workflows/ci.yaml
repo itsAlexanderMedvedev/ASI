@@ -35,10 +35,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/iris-streamlit
-          docker build -t $IMAGE_NAME:latest .
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/iris-streamlit"
+          IMAGE_NAME=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
+          docker build -t "$IMAGE_NAME:latest" .
 
       - name: Push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/iris-streamlit
-          docker push $IMAGE_NAME:latest
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/iris-streamlit"
+          IMAGE_NAME=$(echo "$IMAGE_NAME" | tr '[:upper:]' '[:lower:]')
+          docker push "$IMAGE_NAME:latest"
