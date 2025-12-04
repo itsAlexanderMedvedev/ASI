@@ -2,7 +2,7 @@ import streamlit as st
 from predict import predict
 
 st.set_page_config(page_title="Iris Predictor", page_icon="🌸")
-st.title("Iris Predictor")
+st.title("Iris Predictors")
 st.write("Enter the measurements and click **Predict**.")
 
 sepal_len = st.number_input("Sepal length", min_value=0.0, max_value=10.0, value=5.1, step=0.1)
