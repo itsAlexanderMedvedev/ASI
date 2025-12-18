@@ -5,6 +5,7 @@ import mlflow
 import mlflow.sklearn
 import numpy as np
 import matplotlib.pyplot as plt
+from mlflow import MlflowException
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -121,6 +122,15 @@ for name, clf in models.items():
             registered_model_name="IrisModel"
         )
 
+        try:
+            registered_model = mlflow.register_model(
+                "runs:/{}/model".format(mlflow.active_run().info.run_id),
+                "IrisModel"
+            )
+            mlflow_version = registered_model.version
+        except MlflowException:
+            mlflow_version = "v0"
+
         # ---- Track best model
         if f1 > best_f1:
             best_f1 = f1
@@ -141,7 +151,7 @@ meta = {
     "best_model": best_model_name,
     "metrics": best_metrics,
     "mlflow_run_id": best_run_id,
-    "version": "v1.0.0"
+    "version": mlflow_version
 }
 
 with open("app/model_meta.json", "w") as f:
